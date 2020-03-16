@@ -24,11 +24,15 @@ namespace CollegeCost.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(collegeName))
+                {
+                    return BadRequest("Error: College name is required.");
+                }
                 var result = await _collegeCostService.GetCollegeCostResourceAsync(collegeName, includeBoarding);
 
                 if (result == null)
                 {
-                    return NotFound();
+                    return NotFound("Error: College not found.");
                 }
 
                 return Ok(result);
